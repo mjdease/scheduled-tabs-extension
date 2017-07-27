@@ -1,5 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin({
+    filename: '[name].css',
+});
 
 module.exports = {
   devtool: 'sourcemap',
@@ -22,6 +27,25 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        }),
+      },
     ],
   },
   resolve: {
@@ -33,5 +57,6 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
+    extractSass,
   ],
 };

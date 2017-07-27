@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import Nested from './nested-component';
 
+import './popup.scss';
+
 class Popup extends React.Component {
   constructor(props) {
     super(props);
