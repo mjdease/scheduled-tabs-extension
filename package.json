@@ -7,7 +7,7 @@
     "start": "webpack -w --display-error-details --progress --colors",
     "build": "webpack --display-error-details --progress --colors",
     "build:prod": "npx webpack -p --display-error-details --progress --colors",
-    "launch": "web-ext lint -s extension/ && web-ext run -s extension/",
+    "launch": "web-ext lint -s extension/ && web-ext run -s extension/ -p scheduled-tabs --start-url about:debugging",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
