@@ -84,6 +84,12 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
+    // React spams warning logs if this isn't defined
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"',
+      },
+    }),
     extractStyles,
   ],
 };
