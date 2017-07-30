@@ -10,7 +10,7 @@ module.exports = function webpackConfig(environment) {
   const env = environment || {};
 
   return {
-    devtool: 'source-map',
+    devtool: env.production ? false : 'source-map',
     entry: {
       popup: './src/popup.jsx',
       background: './src/background.js',
