@@ -2,8 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const extractSass = new ExtractTextPlugin({
-    filename: '[name].css',
+const extractStyles = new ExtractTextPlugin({
+  filename: '[name].css',
 });
 
 module.exports = {
@@ -28,8 +28,21 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
+        test: /\.css$/,
+        use: extractStyles.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        }),
+      },
+      {
         test: /\.scss$/,
-        use: extractSass.extract({
+        use: extractStyles.extract({
           use: [
             {
               loader: 'css-loader',
@@ -46,6 +59,20 @@ module.exports = {
           ],
         }),
       },
+      {
+        test: [
+          /\.bmp$/,
+          /\.gif$/,
+          /\.jpe?g$/,
+          /\.png$/,
+          /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        ],
+        loader: 'file-loader',
+        options: {
+          name: 'assets/[name].[hash:8].[ext]',
+        },
+      },
     ],
   },
   resolve: {
@@ -57,6 +84,6 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    extractSass,
+    extractStyles,
   ],
 };
